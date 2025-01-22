@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="/static/mvp.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="usage.html">Usage</a></li>
+                <li><a href="#section-1">Menu Item 2</a></li>
+                <li><a href="#">Dropdown Menu Item</a>
+                    <ul>
+                        <li><a href="#">Sublink with a long name</a></li>
+                        <li><a href="#">Short sublink</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <h1>
+        {{ .title }}
+        </h1>
+    </header>
+    <main>
+        <section>
+            <form role="form" action="/todos/save" method="POST">
+                <header>
+                    <h2>Enter Todo</h2>
+                </header>
+                    <textarea class="form-control" name="content" id="content" placeholder="Add todo" rows="4"></textarea>
+                    <button class="btn btn-lg btn-primary pull-right" type="submit">Create</button>
+            </form>
+        </section>
+        <section>
+            <ul>
+                {{ range .todos }}
+                <li>
+                    <a href="/todos/edit?id={{.ID}}">{{ .Content }}</a> <a href="/todos/destroy?id={{ .ID }}">[Delete]</a>
+                </li>
+                {{ end }}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

@@ -4,23 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo list</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/mvp.css">
 </head>
 <body>
 <html>
+    <header>
+        <nav>
+            <a href="/"><img alt="Logo" src="https://via.placeholder.com/200x70?text=Logo" height="70"></a>
+            <ul>
+                <li>Menu Item 1</li>
+                <li><a href="#section-1">Menu Item 2</a></li>
+                <li><a href="#">Dropdown Menu Item</a>
+                    <ul>
+                        <li><a href="#">Sublink with a long name</a></li>
+                        <li><a href="#">Short sublink</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     <h1>
     {{ .title }}
     </h1>
-    <form role="form" action="/todos/update" method="POST">
-        <input type="hidden" name="id" value="{{ .todo.ID }}" />
-        <div class="lead">Update Todos</div>
-        <div class="form-group">
-            <textarea class="form-control" name="content" id="content" placeholder="Add Todo" rows="4">{{.todo.Content}}</textarea>
-            <br />
-            <br />
-            <button class="btn btn-lg btn-primary pull-right" type="submit">Update</button>
-        </div>
-    </form>
-    <hr />
+    </header>
+    <section>
+        <form role="form" action="/todos/update" method="POST">
+            <input type="hidden" name="id" value="{{ .todo.ID }}" />
+            <div class="lead">Update Todos</div>
+            <div class="form-group">
+                <textarea class="form-control" name="content" id="content" placeholder="Add Todo" rows="4">{{.todo.Content}}</textarea>
+                <button class="btn btn-lg btn-primary pull-right" type="submit">Update</button>
+            </div>
+        </form>
+    </section>
 </body>
 </html>
