@@ -1,0 +1,6 @@
+config/
+config.ini
+go.mod
+go.sum
+webapp.log
+webapp.sql
