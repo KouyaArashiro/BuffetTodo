@@ -2,23 +2,28 @@ package models
 
 import (
     "fmt"
-    _ "github.com/mattn/go-sqlite3"
-    "test-app/config"
-    "gorm.io/driver/sqlite"
+    "log"
+    "BuffettFive/config"
+    "gorm.io/driver/postgres"
     "gorm.io/gorm"
 )
 
 var Db *gorm.DB
 var err error
 
-const (
-    tableNameTodo = "todos"
-)
-
 func init() {
-    Db, err = gorm.Open(sqlite.Open(config.Config.DbName))
+    dsn := fmt.Sprintf(
+        "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+        config.Config.DBHost,
+        config.Config.DBPort,
+        config.Config.DBUser,
+        config.Config.DBPassword,
+        config.Config.DBName,
+    )
+
+    Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
     if err != nil {
-        fmt.Errorf("error:%v", err)
+        log.Fatalf("failed to connect database: %v", err)
     }
 
     Db.AutoMigrate(&Todo{})

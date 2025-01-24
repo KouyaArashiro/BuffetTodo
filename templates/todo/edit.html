@@ -25,8 +25,12 @@
             <input type="hidden" name="id" value="{{ .todo.ID }}" />
             <div class="lead">Update Todos</div>
             <div class="form-group">
-                <textarea class="form-control" name="content" id="content" placeholder="Add Todo" rows="4">{{.todo.Content}}</textarea>
-                <button class="btn btn-lg btn-primary pull-right" type="submit">Update</button>
+                <textarea class="form-control" name="content" id="content" rows="4">{{.todo.Content}}</textarea>
+                <select name="category" id="category">
+                    <option value="must" {{ if eq .todo.Category "must"}}selected{{end}}>Must</option>
+                    <option value="want" {{ if eq .todo.Category "want"}}selected{{end}}>Want</option>
+                </select>
+                <button type="submit">Update</button>
             </div>
         </form>
     </section>

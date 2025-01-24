@@ -20,18 +20,37 @@
     </header>
     <main>
         <section>
+            <h2>Must</h2>
             <ul>
                 {{ range .todos }}
-                <li>
-                    <a href="/todos/edit?id={{.ID}}">{{ .Content }}</a> <a href="/todos/destroy?id={{ .ID }}">[Delete]</a>
-                </li>
+                    {{ if eq .Category "must" }}
+                        <li>
+                            <a href="/todos/edit?id={{.ID}}">{{ .Content }}</a> <a href="/todos/destroy?id={{ .ID }}">[Delete]</a>
+                        </li>
+                    {{ end }}
+                {{ end }}
+            </ul>
+        </section>
+        <section>
+            <h2>Want</h2>
+            <ul>
+                {{ range .todos }}
+                    {{ if eq .Category "want" }}
+                        <li>
+                            <a href="/todos/edit?id={{.ID}}">{{ .Content }}</a> <a href="/todos/destroy?id={{ .ID }}">[Delete]</a>
+                        </li>
+                    {{ end }}
                 {{ end }}
             </ul>
         </section>
         <section>
             <form role="form" action="/todos/save" method="POST">
                     <textarea class="form-control" name="content" id="content" placeholder="Add todo" rows="4"></textarea>
-                    <button class="btn btn-lg btn-primary pull-right" type="submit">Create</button>
+                    <select name="category">
+                        <option value="must">Must</option>
+                        <option value="want"selected>Want</option>
+                    </select>
+                    <button type="submit">Create</button>
             </form>
         </section>
     </main>

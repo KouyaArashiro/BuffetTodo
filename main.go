@@ -7,12 +7,15 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"test-app/config"
-	"test-app/models"
+	"BuffettFive/config"
+	"BuffettFive/models"
 )
 
 func setupRouter() *gin.Engine {
-	f, _ := os.Create(config.Config.LogFile)
+	f, err := os.Create(config.Config.LogFile)
+    if err != nil {
+        log.Fatalf("Couldn't create logfile", err)
+    }
 	gin.DefaultWriter = io.MultiWriter(os.Stdout, f)
 
 	r := gin.Default()
@@ -20,17 +23,33 @@ func setupRouter() *gin.Engine {
 	r.LoadHTMLGlob("templates/**/*")
 
 	r.POST("/todos/save", func(c *gin.Context) {
-		models.CreateTodo(c.PostForm("content"))
+        content := c.PostForm("content")
+        category := c.PostForm("category")
+
+        if err := models.CreateTodo(content, category); err != nil {
+            c.String(http.StatusBadRequest, "Creation error: %v", err)
+            return
+        }
 		c.Redirect(http.StatusMovedPermanently, "/todos/list")
 	})
 
 	r.POST("/todos/update", func(c *gin.Context) {
 		id, _ := strconv.Atoi(c.PostForm("id"))
 		content := c.PostForm("content")
-		todo, _ := models.GetTodo(id)
-		todo.Content = content
-		models.UpdateTodo(todo)
+		category := c.PostForm("category")
 
+		todo, err := models.GetTodo(id)
+        if err != nil {
+            c.String(http.StatusBadRequest, "Not fount target id")
+            return
+        }
+
+		todo.Content = content
+		todo.Category = category
+        if err := models.UpdateTodo(todo); err != nil  {
+            c.String(http.StatusBadRequest, "Update err: %v", err)
+            return
+        }
 		c.Redirect(http.StatusMovedPermanently, "/todos/list")
 	})
 
@@ -53,8 +72,10 @@ func setupRouter() *gin.Engine {
 			log.Fatalln(err)
 		}
 
-		models.DeleteTodo(id)
-		c.Redirect(http.StatusMovedPermanently, "/todos/list")
+		if err := models.DeleteTodo(id); err != nil {
+	        c.String(http.StatusBadRequest, "Delete error: %v", err)
+        }
+        c.Redirect(http.StatusMovedPermanently, "/todos/list")
 	})
 
 	r.GET("/todos/list", func(c *gin.Context) {
