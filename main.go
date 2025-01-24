@@ -27,7 +27,14 @@ func setupRouter() *gin.Engine {
         category := c.PostForm("category")
 
         if err := models.CreateTodo(content, category); err != nil {
-            c.String(http.StatusBadRequest, "Creation error: %v", err)
+            var todos []models.Todo
+            models.Db.Find(&todos)
+
+            c.HTML(http.StatusOK, "list.html", gin.H{
+                "title": "BuffettFive",
+                "todos": todos,
+                "errorMessage": err.Error(),
+            })
             return
         }
 		c.Redirect(http.StatusMovedPermanently, "/todos/list")
@@ -47,7 +54,11 @@ func setupRouter() *gin.Engine {
 		todo.Content = content
 		todo.Category = category
         if err := models.UpdateTodo(todo); err != nil  {
-            c.String(http.StatusBadRequest, "Update err: %v", err)
+            c.HTML(http.StatusOK, "edit.html", gin.H{
+                "title": "BuffetFive",
+                "todo": todo,
+                "errorMessage": err.Error(),
+            })
             return
         }
 		c.Redirect(http.StatusMovedPermanently, "/todos/list")

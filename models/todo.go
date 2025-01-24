@@ -21,12 +21,12 @@ func CreateTodo(content string, category string) (err error) {
     if category == "must" {
         Db.Model(&Todo{}).Where("category = ?", "must").Count(&count)
         if count >= MaxMustCount {
-            return errors.New("Over limit")
+            return errors.New("Must areas can only be added up to 5")
         }
     } else if category == "want" {
         Db.Model(&Todo{}).Where("category = ?", "want").Count(&count)
         if count >= MaxWantCount {
-            return errors.New("Over limit")
+            return errors.New("Want areas can only be added up to 50")
         }
     } else {
         return errors.New("Only use must or want")
@@ -62,12 +62,12 @@ func UpdateTodo(t Todo) (err error) {
         if t.Category == "must" {
             Db.Model(&Todo{}).Where("category = ?", "must").Count(&count)
             if count >= MaxMustCount {
-                return errors.New("Over limit")
+                return errors.New("Must areas can only be added up to 5")
             }
         } else if t.Category == "want" {
             Db.Model(&Todo{}).Where("category = ?", "want").Count(&count)
             if count >= MaxWantCount {
-                return errors.New("Over limit")
+                return errors.New("Want areas can only be added up to 50")
             }
         } else {
             return errors.New("Only use must or want")

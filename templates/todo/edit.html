@@ -30,6 +30,9 @@
                     <option value="must" {{ if eq .todo.Category "must"}}selected{{end}}>Must</option>
                     <option value="want" {{ if eq .todo.Category "want"}}selected{{end}}>Want</option>
                 </select>
+                    {{ if .errorMessage }}
+                        <p style="color:red;">{{ .errorMessage }}</p>
+                    {{ end }}
                 <button type="submit">Update</button>
             </div>
         </form>
