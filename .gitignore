@@ -4,4 +4,5 @@ go.mod
 go.sum
 webapp.log
 webapp.sql
+gin.log
 .env

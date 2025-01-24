@@ -5,6 +5,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuffettFive</title>
     <link rel="stylesheet" href="/static/mvp.css">
+    <link rel="stylesheet" href="/static/custom.css">
 </head>
 <body>
     <header>
@@ -30,6 +31,7 @@
                     {{ end }}
                 {{ end }}
             </ul>
+            <hr>
         </section>
         <section>
             <h2>Want</h2>
@@ -45,11 +47,11 @@
         </section>
         <section>
             <form role="form" action="/todos/save" method="POST">
-                <textarea class="form-control" name="content" id="content" placeholder="Add todo" rows="4"></textarea>
-                <select name="category">
+                <select name="category" class="category">
                     <option value="must">Must</option>
                     <option value="want"selected>Want</option>
                 </select>
+                <textarea class="form-control" name="content" id="content" placeholder="Add todo" rows="4"></textarea>
                 {{ if .errorMessage }}
                     <p style="color:red;">{{ .errorMessage }}</p>
                 {{ end }}
