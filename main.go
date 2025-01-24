@@ -42,7 +42,7 @@ func setupRouter() *gin.Engine {
 
 		todo, _ := models.GetTodo(id)
 		c.HTML(http.StatusOK, "edit.html", gin.H{
-			"title": "Todo list",
+			"title": "BuffettFive",
 			"todo":  todo,
 		})
 	})
@@ -62,7 +62,7 @@ func setupRouter() *gin.Engine {
 		models.Db.Find(&todos)
 
 		c.HTML(http.StatusOK, "list.html", gin.H{
-			"title": "Todo list" ,
+			"title": "BuffettFieve" ,
 			"todos": todos,
 		})
 	})

@@ -10,21 +10,15 @@
 <html>
     <header>
         <nav>
-            <a href="/"><img alt="Logo" src="https://via.placeholder.com/200x70?text=Logo" height="70"></a>
+            <h1>{{ .title }}</h1>
             <ul>
-                <li>Menu Item 1</li>
-                <li><a href="#section-1">Menu Item 2</a></li>
-                <li><a href="#">Dropdown Menu Item</a>
-                    <ul>
-                        <li><a href="#">Sublink with a long name</a></li>
-                        <li><a href="#">Short sublink</a></li>
-                    </ul>
-                </li>
+                <li><a href="/static/usage.html">Usage</a></li>
+                <li><a href="/static/support.html">Support</a></li>
+                <li><a href="/static/login.html">Login</a></li>
+                <li><a href="/static/signin.html">Sign in</a></li>
             </ul>
         </nav>
-    <h1>
-    {{ .title }}
-    </h1>
+    <h1>Update</h1>
     </header>
     <section>
         <form role="form" action="/todos/update" method="POST">
